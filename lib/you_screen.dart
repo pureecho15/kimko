@@ -14,7 +14,7 @@ class YouScreen extends StatelessWidget {
         bottom: PreferredSize(preferredSize: const Size.fromHeight(1), child: Container(height: 1, color: const Color(0xFF2A2A2A))),
       ),
       body: Center(
-        child: Text('Global Analytics & Settings\nComing Soon', textAlign: TextAlign.center, style: TextStyle(color: Color(0xFF666666), fontSize: 16)),
+        child: Text('Global Analytics & Settings\nComing Soon', textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFF666666), fontSize: 16)),
       ),
     );
   }

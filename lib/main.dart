@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'config/keys.dart';
 import 'tasks_list_screen.dart';
+import 'kimiko_screen.dart';
 import 'brainstorming_screen.dart';
+import 'you_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,9 +16,10 @@ Future<void> main() async {
     systemNavigationBarColor:  Color(0xFF0D0D0D),
   ));
 
+  // Credentials are pulled from lib/config/keys.dart (gitignored).
   await Supabase.initialize(
-    url:     'https://osveifptdeeckjaqrofe.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zdmVpZnB0ZGVlY2tqYXFyb2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MjE3NTgsImV4cCI6MjA5MzE5Nzc1OH0.rLR7TSgQbyKNREE_Upq-CV2RptjjmpVFX1ggNnWAXZw',
+    url:     supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
 
   runApp(const KimikoApp());
@@ -50,11 +54,12 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
 
+  // Wired up the actual screens instead of placeholder widgets.
   static const _screens = [
     TasksListScreen(),
-    _KimikoPlaceholder(),
+    KimikoScreen(),
     BrainstormingScreen(),
-    _YouPlaceholder(),
+    YouScreen(),
   ];
 
   @override
@@ -104,31 +109,4 @@ class _MainShellState extends State<MainShell> {
       ),
     );
   }
-}
-
-// ── Placeholder tabs (build out later) ───────
-class _KimikoPlaceholder extends StatelessWidget {
-  const _KimikoPlaceholder();
-  @override
-  Widget build(BuildContext context) => const Scaffold(
-    backgroundColor: Color(0xFF0D0D0D),
-    body: Center(
-      child: Text('Kimiko AI Enforcer\nComing next.',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Color(0xFF666666), fontSize: 15, height: 1.6)),
-    ),
-  );
-}
-
-class _YouPlaceholder extends StatelessWidget {
-  const _YouPlaceholder();
-  @override
-  Widget build(BuildContext context) => const Scaffold(
-    backgroundColor: Color(0xFF0D0D0D),
-    body: Center(
-      child: Text('The Ledger\nComing next.',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Color(0xFF666666), fontSize: 15, height: 1.6)),
-    ),
-  );
 }

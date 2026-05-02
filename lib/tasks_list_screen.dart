@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'config/keys.dart';
 import 'task_detail_screen.dart';
 
 const _bg            = Color(0xFF0D0D0D);
@@ -10,7 +11,7 @@ const _border        = Color(0xFF2A2A2A);
 const _textPrimary   = Color(0xFFEAEAEA);
 const _textSecondary = Color(0xFF666666);
 const _accent        = Color(0xFFB388FF);
-const _kBypassUserId = '00000000-0000-0000-0000-000000000000';
+// User ID sourced from config/keys.dart (kBypassUserId)
 
 final _supabase = Supabase.instance.client;
 
@@ -68,7 +69,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
       final taskRows = await _supabase
           .from('tasks')
           .select('id, name, priority, created_at')
-          .eq('user_id', _kBypassUserId)
+          .eq('user_id', kBypassUserId)
           .eq('status', 'active')
           .order('priority', ascending: false)
           .order('created_at');
@@ -79,7 +80,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
       final contribRows = await _supabase
           .from('micro_contributions')
           .select('task_id')
-          .eq('user_id', _kBypassUserId)
+          .eq('user_id', kBypassUserId)
           .eq('logged_date', todayStr);
 
       final checkedIds = <String>{
@@ -111,7 +112,7 @@ class _TasksListScreenState extends State<TasksListScreen> {
   }) async {
     try {
       await _supabase.from('tasks').insert({
-        'user_id':  _kBypassUserId,
+        'user_id':  kBypassUserId,
         'name':     name,
         'priority': priority,
         'status':   'active',

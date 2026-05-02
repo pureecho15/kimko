@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'config/keys.dart';
 
 const _bg            = Color(0xFF0D0D0D);
 const _surface       = Color(0xFF1A1A1A);
@@ -9,7 +10,7 @@ const _border        = Color(0xFF2A2A2A);
 const _textPrimary   = Color(0xFFEAEAEA);
 const _textSecondary = Color(0xFF666666);
 const _accent        = Color(0xFFB388FF);
-const _kBypassUserId = '00000000-0000-0000-0000-000000000000';
+// User ID sourced from config/keys.dart (kBypassUserId)
 
 final _supabase = Supabase.instance.client;
 
@@ -186,7 +187,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen>
       // Upsert (unique index on task_id + logged_date)
       await _supabase.from('micro_contributions').upsert({
         'task_id':     widget.taskId,
-        'user_id':     _kBypassUserId,
+        'user_id':     kBypassUserId,
         'logged_date': today,
         'value':       value,
       }, onConflict: 'task_id,logged_date');
